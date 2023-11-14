@@ -1,0 +1,200 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "hardhat/console.sol";
+
+contract VehicleManagement {
+    address public owner;
+    string[] public requestNumbers;
+    string[] registerVehicleCounter;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    struct User {
+        bool registered;
+    }
+
+    struct Vehicle {
+        string model;
+        string color;
+        string number;
+        string category;
+        string chassisNumber;
+        address owner;
+    }
+
+    struct VehicleRequest {
+        string number;
+        string model;
+        string color;
+        string category;
+        string chassisNumber;
+        address requester;
+    }
+
+    struct OwnershipRequest {
+        string number;
+        address newOwner;
+        address requester;
+    }
+
+    mapping(address => User) public users;
+    mapping(string => Vehicle) public vehicles;
+    mapping(string => address[]) public ownershipHistory;
+    mapping(string => VehicleRequest) public vehicleRequests;
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only the owner can perform this action");
+        _;
+    }
+
+    modifier onlyRegisteredUser() {
+        require(users[msg.sender].registered, "User is not registered");
+        _;
+    }
+
+    function registerUser() public {
+        require(!users[msg.sender].registered, "User is already registered");
+        users[msg.sender] = User(true);
+    }
+
+    function requestVehicleRegistration(
+        string memory _number,
+        string memory _model,
+        string memory _color,
+        string memory _category,
+        string memory _chassisNumber
+    ) public onlyRegisteredUser {
+        require(
+            vehicles[_number].owner == address(0),
+            "Vehicle with this number is already registered"
+        );
+
+        VehicleRequest memory newRequest = VehicleRequest({
+            number: _number,
+            model: _model,
+            color: _color,
+            category: _category,
+            chassisNumber: _chassisNumber,
+            requester: msg.sender
+        });
+        requestNumbers.push(_number);
+        vehicleRequests[_number] = newRequest;
+    }
+
+    function approveVehicleRegistration(
+        string memory _number
+    ) public onlyOwner {
+        VehicleRequest storage request = vehicleRequests[_number];
+        require(
+            request.requester != address(0),
+            "No pending request for this vehicle"
+        );
+        uint256 indexToDelete;
+        for (uint256 i = 0; i < requestNumbers.length; i++) {
+            if (
+                keccak256(abi.encodePacked(requestNumbers[i])) ==
+                keccak256(abi.encodePacked(_number))
+            ) {
+                indexToDelete = i;
+                break;
+            }
+        }
+        if (indexToDelete < requestNumbers.length - 1) {
+            requestNumbers[indexToDelete] = requestNumbers[
+                requestNumbers.length - 1
+            ];
+        }
+        requestNumbers.pop();
+
+        Vehicle memory newVehicle = Vehicle({
+            model: request.model,
+            color: request.color,
+            number: request.number,
+            category: request.category,
+            chassisNumber: request.chassisNumber,
+            owner: request.requester
+        });
+
+        vehicles[request.number] = newVehicle;
+        registerVehicleCounter.push(request.number);
+        delete vehicleRequests[request.number];
+    }
+
+    function rejectVehicleRegistration(string memory _number) public onlyOwner {
+        VehicleRequest storage request = vehicleRequests[_number];
+        require(
+            request.requester != address(0),
+            "No pending request for this vehicle"
+        );
+        uint256 indexToDelete;
+        for (uint256 i = 0; i < requestNumbers.length; i++) {
+            if (
+                keccak256(abi.encodePacked(requestNumbers[i])) ==
+                keccak256(abi.encodePacked(_number))
+            ) {
+                indexToDelete = i;
+                break;
+            }
+        }
+
+        if (indexToDelete < requestNumbers.length - 1) {
+            requestNumbers[indexToDelete] = requestNumbers[
+                requestNumbers.length - 1
+            ];
+        }
+        requestNumbers.pop();
+        delete vehicleRequests[_number];
+    }
+
+    function getAllVehicleRequests()
+        public
+        view
+        returns (VehicleRequest[] memory)
+    {
+        VehicleRequest[] memory allRequests = new VehicleRequest[](
+            requestNumbers.length
+        );
+        for (uint256 i = 0; i < requestNumbers.length; i++) {
+            string memory requestNumber = requestNumbers[i];
+            VehicleRequest storage request = vehicleRequests[requestNumber];
+            allRequests[i] = request;
+        }
+        return allRequests;
+    }
+
+    function getAllVehicles() public view returns (Vehicle[] memory) {
+        // Create an array to store all vehicles
+        Vehicle[] memory allVehicles = new Vehicle[](
+            registerVehicleCounter.length
+        );
+        console.log(
+            " ~ file: VehicleManagement.sol:170 ~ getAllVehicles ~ registerVehicleCounter.length:",
+            registerVehicleCounter.length
+        );
+        for (uint256 i = 0; i < registerVehicleCounter.length; i++) {
+            string memory requestNumber = registerVehicleCounter[i];
+            Vehicle storage vehicle = vehicles[requestNumber];
+
+            allVehicles[i] = vehicle;
+        }
+
+        return allVehicles;
+    }
+
+    function vehicleOwnershipTransfer(
+        string memory _number,
+        address _newOwner
+    ) public onlyRegisteredUser {
+        Vehicle storage vehicle = vehicles[_number];
+        require(
+            msg.sender == vehicle.owner,
+            "Only the current owner can request ownership transfer"
+        );
+
+        ownershipHistory[_number].push(vehicles[_number].owner);
+        vehicles[_number].owner = _newOwner;
+    }
+}
