@@ -1,5 +1,5 @@
 export const SMART_CONTRACT_ADDRESS =
-  "0x0dAf526DD8D92cD82F1e621F241ec0Cbf823Caba";
+  "0xD36722771fe84CeaCc09d8E40492e63e443546Af";
 export const SMART_CONTRACT_ABI = [
   {
     type: "constructor",
@@ -20,6 +20,96 @@ export const SMART_CONTRACT_ABI = [
     ],
     outputs: [],
     stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "getAllVehicleRequests",
+    inputs: [],
+    outputs: [
+      {
+        type: "tuple[]",
+        name: "",
+        components: [
+          {
+            type: "string",
+            name: "number",
+            internalType: "string",
+          },
+          {
+            type: "string",
+            name: "model",
+            internalType: "string",
+          },
+          {
+            type: "string",
+            name: "color",
+            internalType: "string",
+          },
+          {
+            type: "string",
+            name: "category",
+            internalType: "string",
+          },
+          {
+            type: "string",
+            name: "chassisNumber",
+            internalType: "string",
+          },
+          {
+            type: "address",
+            name: "requester",
+            internalType: "address",
+          },
+        ],
+        internalType: "struct VehicleManagement.VehicleRequest[]",
+      },
+    ],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
+    name: "getAllVehicles",
+    inputs: [],
+    outputs: [
+      {
+        type: "tuple[]",
+        name: "",
+        components: [
+          {
+            type: "string",
+            name: "model",
+            internalType: "string",
+          },
+          {
+            type: "string",
+            name: "color",
+            internalType: "string",
+          },
+          {
+            type: "string",
+            name: "number",
+            internalType: "string",
+          },
+          {
+            type: "string",
+            name: "category",
+            internalType: "string",
+          },
+          {
+            type: "string",
+            name: "chassisNumber",
+            internalType: "string",
+          },
+          {
+            type: "address",
+            name: "owner",
+            internalType: "address",
+          },
+        ],
+        internalType: "struct VehicleManagement.Vehicle[]",
+      },
+    ],
+    stateMutability: "view",
   },
   {
     type: "function",
@@ -64,6 +154,38 @@ export const SMART_CONTRACT_ABI = [
     inputs: [],
     outputs: [],
     stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "rejectVehicleRegistration",
+    inputs: [
+      {
+        type: "string",
+        name: "_number",
+        internalType: "string",
+      },
+    ],
+    outputs: [],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "requestNumbers",
+    inputs: [
+      {
+        type: "uint256",
+        name: "",
+        internalType: "uint256",
+      },
+    ],
+    outputs: [
+      {
+        type: "string",
+        name: "",
+        internalType: "string",
+      },
+    ],
+    stateMutability: "view",
   },
   {
     type: "function",
