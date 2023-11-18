@@ -191,7 +191,7 @@ contract VehicleManagement {
         Vehicle storage vehicle = vehicles[_number];
         require(
             msg.sender == vehicle.owner,
-            "Only the current owner can request ownership transfer"
+            "Only the current owner can transfer vehicle ownership"
         );
 
         ownershipHistory[_number].push(vehicles[_number].owner);

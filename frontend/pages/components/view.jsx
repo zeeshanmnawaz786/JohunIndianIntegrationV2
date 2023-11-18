@@ -10,20 +10,22 @@ export default function View() {
     []
   );
 
-  const filterVehicle = getAllVehicles.filter((item) => {
+  const filterVehicle = getAllVehicles?.filter((item) => {
     return item.owner === address;
   });
   console.log(
-    "🚀 ~ file: view.jsx:16 ~ filterVehicle ~ filterVehicle:",
+    "🚀 ~ file: view.jsx:17 ~ filterVehicle ~ filterVehicle:",
     filterVehicle
   );
+
   return (
     <>
       <div className="bg-white shadow px-4 mt-10 md:px-10 pt-4 md:pt-7 pb-5 overflow-y-auto">
         <table className="w-full whitespace-nowrap">
           <thead>
             <tr className="h-16 w-full text-sm leading-none text-gray-800">
-              <th className="font-normal text-left pl-4">Number</th>
+              <th className="font-normal text-left pl-4">S No.</th>
+              <th className="font-normal text-left pl-12">Number</th>
               <th className="font-normal text-left pl-12">Modal</th>
               <th className="font-normal text-left pl-12">Color</th>
               <th className="font-normal text-left pl-20">Category</th>
@@ -43,6 +45,7 @@ export default function View() {
                         </div>
                       </div>
                     </td>
+
                     <td className="pl-12">
                       <p className="text-sm font-medium leading-none text-gray-800">
                         {item.number}
@@ -50,6 +53,9 @@ export default function View() {
                     </td>
                     <td className="pl-12">
                       <p className="font-medium">{item.model}</p>
+                    </td>
+                    <td className="pl-12">
+                      <p className="font-medium">{item.color}</p>
                     </td>
                     <td className="pl-20">
                       <p className="font-medium">{item.category}</p>
