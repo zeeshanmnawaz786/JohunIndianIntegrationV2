@@ -184,6 +184,12 @@ contract VehicleManagement {
         return allVehicles;
     }
 
+    function getOwnershipHistory(
+        string memory _number
+    ) public view returns (address[] memory) {
+        return ownershipHistory[_number];
+    }
+
     function vehicleOwnershipTransfer(
         string memory _number,
         address _newOwner

@@ -34,6 +34,7 @@ export default function RegisterVehicle() {
         ],
       });
       console.info("contract call successs", data);
+      alert("please wait while owner is viewing your register request");
     } catch (err) {
       console.error("contract call failure", err);
     }
