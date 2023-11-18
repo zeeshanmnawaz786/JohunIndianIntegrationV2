@@ -1,5 +1,6 @@
 import { SMART_CONTRACT_ADDRESS } from "../../lib/constants";
 import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
+import History from "../model/history";
 
 export default function View() {
   const address = useAddress();
@@ -13,10 +14,6 @@ export default function View() {
   const filterVehicle = getAllVehicles?.filter((item) => {
     return item.owner === address;
   });
-  console.log(
-    "🚀 ~ file: view.jsx:17 ~ filterVehicle ~ filterVehicle:",
-    filterVehicle
-  );
 
   return (
     <>
@@ -64,7 +61,9 @@ export default function View() {
                       <p className="font-medium">{item.chassisNumber}</p>
                     </td>
                     <td className="pl-16">
-                      <div className="flex items-center">
+                      <History number={item.number} />
+
+                      {/* <div className="flex items-center">
                         <img
                           className="shadow-md w-8 h-8 rounded-full"
                           src="https://cdn.tuk.dev/assets/templates/olympus/projects(8).png"
@@ -81,7 +80,7 @@ export default function View() {
                           className="shadow-md w-8 h-8 rounded-full -ml-2"
                           src="https://cdn.tuk.dev/assets/templates/olympus/projects(11).png"
                         />
-                      </div>
+                      </div> */}
                     </td>
                   </tr>
                 );

@@ -15,10 +15,7 @@ export default function Transfer() {
     number: "",
     newOwner: "",
   });
-  console.log(
-    "🚀 ~ file: transfer.jsx:18 ~ Transfer ~ transferOwnerShipData:",
-    transferOwnerShipData
-  );
+
   const { data: getAllVehicles } = useContractRead(
     contract,
     "getAllVehicles",
