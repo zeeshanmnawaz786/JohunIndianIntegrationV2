@@ -92,7 +92,11 @@ export default function Transfer() {
 
             {filterVehicle &&
               filterVehicle.map((item) => {
-                return <option value={item.number}>{item.number}</option>;
+                return (
+                  <option key={index} value={item.number}>
+                    {item.number}
+                  </option>
+                );
               })}
           </select>
           <p className="mt-3 text-xs leading-3 text-gray-600">

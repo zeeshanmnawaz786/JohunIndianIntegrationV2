@@ -34,7 +34,10 @@ export default function View() {
             {filterVehicle &&
               filterVehicle.map((item, index) => {
                 return (
-                  <tr className="h-20 text-sm leading-none text-gray-800 bg-white hover:bg-gray-100 border-b border-t border-gray-100">
+                  <tr
+                    key={index}
+                    className="h-20 text-sm leading-none text-gray-800 bg-white hover:bg-gray-100 border-b border-t border-gray-100"
+                  >
                     <td className="pl-4 cursor-pointer">
                       <div className="flex items-center">
                         <div className="">
