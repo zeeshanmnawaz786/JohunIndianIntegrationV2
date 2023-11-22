@@ -19,6 +19,13 @@ export default function RegisterPage() {
     [address]
   );
 
+  const { data: getAllVehicles } = useContractRead(
+    contract,
+    "getAllVehicles",
+    []
+  );
+  const { data: userCounter } = useContractRead(contract, "userCounter", []);
+
   const callRegisterUser = async () => {
     try {
       const data = await registerUser({ args: [] });
@@ -29,13 +36,31 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="bg-[#14000b] h-screen">
-      <div className="container mx-auto flex flex-col justify-center items-center py-12 sm:py-24 ">
-        <div className="w-11/12 sm:w-2/3 lg:flex justify-center items-center flex-col mb-5 sm:mb-10 pt-28 sm:pt-5">
+    <div className="bg-[#14000b] min-h-screen">
+      <div className="container mx-auto flex flex-col justify-center items-center py-12 sm:py-24">
+        <div className="w-11/12 sm:w-2/3 mx-auto flex flex-col justify-center items-center mb-5 sm:mb-10 pt-5 sm:pt-10">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center text-white font-black leading-7 md:leading-10 ml-5 mr-5 sm:ml-0 sm:mr-0">
             Secure Your Vehicle Record with a
             <span className="text-indigo-700"> Decentralized </span>Application
           </h1>
+          <section className="grid gap-6 md:grid-cols-2 md:gap-16 mt-5 mx-auto">
+            <h2 className="text-center">
+              <span className="flex text-white text-5xl font-extrabold mb-2 ">
+                <span>{(userCounter && String(userCounter)) || 0}</span>
+              </span>
+              <span className="inline-flex font-semibold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-indigo-300 mb-2">
+                Users
+              </span>
+            </h2>
+            <h2 className="text-center">
+              <span className="flex text-white text-5xl font-extrabold mb-2 ">
+                <span>{(getAllVehicles && getAllVehicles.length) || 0}</span>
+              </span>
+              <span className="inline-flex font-semibold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-indigo-300 mb-2">
+                Vehicles
+              </span>
+            </h2>
+          </section>
           <p className="mt-5 sm:mt-10 lg:w-10/12 text-white font-normal text-center text-sm sm:text-lg ">
             Elevate your vehicle fleet management to a new level. Seize command
             of your transportation assets and safeguard your vehicles like never

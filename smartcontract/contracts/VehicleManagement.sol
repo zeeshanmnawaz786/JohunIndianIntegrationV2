@@ -7,6 +7,7 @@ contract VehicleManagement {
     address public owner;
     string[] public requestNumbers;
     string[] registerVehicleCounter;
+    uint256 public userCounter;
 
     constructor() {
         owner = msg.sender;
@@ -58,6 +59,7 @@ contract VehicleManagement {
     function registerUser() public {
         require(!users[msg.sender].registered, "User is already registered");
         users[msg.sender] = User(true);
+        userCounter = userCounter + 1;
     }
 
     function requestVehicleRegistration(

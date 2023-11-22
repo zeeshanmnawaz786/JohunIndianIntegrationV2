@@ -22,6 +22,9 @@ describe("VehicleManagement Smart Contract", function () {
   it("registerUser", async function () {
     await vehicleManagement.connect(a3).registerUser();
   });
+  it("registerUser", async function () {
+    await vehicleManagement.connect(a4).registerUser();
+  });
 
   it("requestVehicleRegistration", async function () {
     await vehicleManagement
@@ -33,13 +36,13 @@ describe("VehicleManagement Smart Contract", function () {
       .connect(a1)
       .requestVehicleRegistration("8040", "2000", "black", "bike", "12345678");
   });
-  it("rejectVehicleRegistration", async function () {
-    await vehicleManagement.connect(owner).rejectVehicleRegistration("8030");
-  });
-
-  // it("approveVehicleRegistration", async function () {
-  //   await vehicleManagement.connect(owner).approveVehicleRegistration("8030");
+  // it("rejectVehicleRegistration", async function () {
+  //   await vehicleManagement.connect(owner).rejectVehicleRegistration("8030");
   // });
+
+  it("approveVehicleRegistration", async function () {
+    await vehicleManagement.connect(owner).approveVehicleRegistration("8030");
+  });
   it("approveVehicleRegistration", async function () {
     await vehicleManagement.connect(owner).approveVehicleRegistration("8040");
   });
@@ -47,6 +50,10 @@ describe("VehicleManagement Smart Contract", function () {
   it("getAllVehicles", async function () {
     // console.log(await vehicleManagement.connect(owner).getAllVehicleRequests());
     console.log(await vehicleManagement.connect(a1).getAllVehicles());
+  });
+  it("userCounter", async function () {
+    // console.log(await vehicleManagement.connect(owner).getAllVehicleRequests());
+    console.log(await vehicleManagement.connect(a1).userCounter());
   });
 
   // it("vehicleOwnershipTransfer", async function () {

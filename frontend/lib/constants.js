@@ -1,5 +1,5 @@
 export const SMART_CONTRACT_ADDRESS =
-  "0xfE7f35052AeD700137922D4daa237BA90716291C";
+  "0xC5E2F60513e542B4012C5e8D82712Aff8c572b52";
 export const SMART_CONTRACT_ABI = [
   {
     type: "constructor",
@@ -113,6 +113,25 @@ export const SMART_CONTRACT_ABI = [
   },
   {
     type: "function",
+    name: "getOwnershipHistory",
+    inputs: [
+      {
+        type: "string",
+        name: "_number",
+        internalType: "string",
+      },
+    ],
+    outputs: [
+      {
+        type: "address[]",
+        name: "",
+        internalType: "address[]",
+      },
+    ],
+    stateMutability: "view",
+  },
+  {
+    type: "function",
     name: "owner",
     inputs: [],
     outputs: [
@@ -219,6 +238,19 @@ export const SMART_CONTRACT_ABI = [
     ],
     outputs: [],
     stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "userCounter",
+    inputs: [],
+    outputs: [
+      {
+        type: "uint256",
+        name: "",
+        internalType: "uint256",
+      },
+    ],
+    stateMutability: "view",
   },
   {
     type: "function",
