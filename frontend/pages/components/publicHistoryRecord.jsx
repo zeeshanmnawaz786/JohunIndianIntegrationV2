@@ -1,33 +1,3 @@
-// import { SMART_CONTRACT_ADDRESS } from "../../lib/constants";
-// import { useContract, useContractRead } from "@thirdweb-dev/react";
-
-// export default function PublicHistory({ number }) {
-//   const { contract } = useContract(SMART_CONTRACT_ADDRESS);
-//   const { data: getOwnershipHistory } = useContractRead(
-//     contract,
-//     "getOwnershipHistory",
-//     [number]
-//   );
-
-//   return (
-//     <>
-//       <div className="relative bg-[#14000b]  text-white rounded-lg shadow">
-//         <div className="p-4 w-full md:p-5 space-y-4">
-//           {getOwnershipHistory && getOwnershipHistory?.length > 0 ? (
-//             getOwnershipHistory.map((item, index) => (
-//               <div key={index} className="mb-2">
-//                 <span className="font-bold ">{index + 1}:</span>{" "}
-//                 <span className="">{item}</span>{" "}
-//               </div>
-//             ))
-//           ) : (
-//             <p className="italic">No history found</p>
-//           )}
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
 import { SMART_CONTRACT_ADDRESS } from "../../lib/constants";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
 
