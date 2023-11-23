@@ -168,14 +168,10 @@ contract VehicleManagement {
     }
 
     function getAllVehicles() public view returns (Vehicle[] memory) {
-        // Create an array to store all vehicles
         Vehicle[] memory allVehicles = new Vehicle[](
             registerVehicleCounter.length
         );
-        console.log(
-            " ~ file: VehicleManagement.sol:170 ~ getAllVehicles ~ registerVehicleCounter.length:",
-            registerVehicleCounter.length
-        );
+
         for (uint256 i = 0; i < registerVehicleCounter.length; i++) {
             string memory requestNumber = registerVehicleCounter[i];
             Vehicle storage vehicle = vehicles[requestNumber];

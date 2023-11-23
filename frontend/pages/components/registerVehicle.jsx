@@ -133,7 +133,6 @@ export default function RegisterVehicle() {
                     <button
                       type="button"
                       className="inline-flex items-center justify-center bg-indigo-700 whitespace-nowrap lg:mt-8 rounded hover:bg-indigo-600 transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white lg:max-w-[144px] w-full "
-                      // class="inline-flex items-center px-4 py-2 text-sm font-semibold leading-6 text-white transition duration-150 ease-in-out bg-indigo-600 rounded-md shadow cursor-not-allowed hover:bg-indigo-600"
                       disabled=""
                     >
                       <svg

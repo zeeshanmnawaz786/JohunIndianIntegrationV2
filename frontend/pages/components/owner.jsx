@@ -7,14 +7,10 @@ import { SMART_CONTRACT_ADDRESS } from "../../lib/constants";
 
 export default function Owner() {
   const { contract } = useContract(SMART_CONTRACT_ADDRESS);
-  const { data: getAllVehicleRequests, isLoading } = useContractRead(
+  const { data: getAllVehicleRequests } = useContractRead(
     contract,
     "getAllVehicleRequests",
     []
-  );
-  console.log(
-    "🚀 ~ file: owner.jsx:8 ~ Owner ~ getAllVehicleRequests:",
-    getAllVehicleRequests
   );
 
   const {
@@ -46,7 +42,7 @@ export default function Owner() {
   };
   return (
     <>
-      <div className="bg-white shadow mt-20 px-4 md:px-10 pt-4 md:pt-7 pb-5 overflow-y-auto">
+      <div className="bg-white shadow px-4 lg:mt-0 md:mt-10 mt-20 sm:mt-0 md:px-10 lg:pt-0 md:pt-0 pb-5 overflow-x-auto">
         <table className="w-full whitespace-nowrap">
           <thead>
             <tr className="h-16 w-full text-sm leading-none text-gray-800">
@@ -134,41 +130,6 @@ export default function Owner() {
                   </tr>
                 );
               })}
-
-            {/* <tr className="h-20 text-sm leading-none text-gray-800 bg-white hover:bg-gray-100 border-b border-t border-gray-100">
-              <td className="pl-4 cursor-pointer">
-                <div className="flex items-center">
-                  <div className="">
-                    <p className="font-medium">1</p>
-                  </div>
-                </div>
-              </td>
-              <td className="pl-12">
-                <p className="text-sm font-medium leading-none text-gray-800">
-                  8030
-                </p>
-              </td>
-              <td className="pl-12">
-                <p className="font-medium">2023</p>
-              </td>
-              <td className="pl-12">
-                <p className="font-medium">Red</p>
-              </td>
-              <td className="pl-12">
-                <p className="font-medium">Car</p>
-              </td>
-              <td className="pl-12">
-                <p className="font-medium">221434354</p>
-              </td>
-              <td className="pl-12">
-                <button className="bg-green-700 mr-3 whitespace-nowrap  rounded hover:bg-green-600 transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white ">
-                  Accept
-                </button>
-                <button className="bg-red-700 whitespace-nowrap  rounded hover:bg-red-600 transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white">
-                  Reject
-                </button>
-              </td>
-            </tr> */}
           </tbody>
         </table>
       </div>

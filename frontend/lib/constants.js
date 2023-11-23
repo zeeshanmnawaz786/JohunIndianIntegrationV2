@@ -1,5 +1,5 @@
 export const SMART_CONTRACT_ADDRESS =
-  "0xC5E2F60513e542B4012C5e8D82712Aff8c572b52";
+  "0xa356C0eF6DFF2912c05eD72F83e73E210DeDe9c0";
 export const SMART_CONTRACT_ABI = [
   {
     type: "constructor",

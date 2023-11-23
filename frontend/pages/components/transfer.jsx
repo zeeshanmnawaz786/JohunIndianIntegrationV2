@@ -91,7 +91,7 @@ export default function Transfer() {
             </option>
 
             {filterVehicle &&
-              filterVehicle.map((item) => {
+              filterVehicle.map((item, index) => {
                 return (
                   <option key={index} value={item.number}>
                     {item.number}
