@@ -1,74 +1,120 @@
+import React, { useState } from "react";
 import { SMART_CONTRACT_ADDRESS } from "../../lib/constants";
-import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
-import History from "../model/history";
+import { useContract, useContractRead } from "@thirdweb-dev/react";
+import PublicHistory from "./publicHistoryRecord";
 
 export default function PublicView() {
-  const address = useAddress();
+  const [inputChassisNum, setInputChassisNum] = useState();
   const { contract } = useContract(SMART_CONTRACT_ADDRESS);
-  const { data: getAllVehicles, isLoading } = useContractRead(
+  const { data: getAllVehicles } = useContractRead(
     contract,
     "getAllVehicles",
     []
   );
 
+  const filterVehicleRecord = getAllVehicles?.filter((item) => {
+    return item.chassisNumber === inputChassisNum;
+  });
+
   return (
     <>
-      <div className="bg-white shadow px-4 lg:mt-0 md:mt-10 mt-20 sm:mt-0 md:px-10 lg:pt-0 md:pt-0 pb-5 overflow-x-auto">
-        <table className="w-full whitespace-nowrap">
-          <thead>
-            <tr className="h-16 w-full text-sm leading-none text-gray-800">
-              <th className="font-normal text-left pl-4">S No.</th>
-              <th className="font-normal text-left pl-2 md:pl-12">Number</th>
-              <th className="font-normal text-left pl-2 md:pl-12">Modal</th>
-              <th className="font-normal text-left pl-2 md:pl-12">Color</th>
-              <th className="font-normal text-left pl-4 md:pl-20">Category</th>
-              <th className="font-normal text-left pl-4 md:pl-20">
-                ChassisNumber
-              </th>
-              <th className="font-normal text-left pl-4 md:pl-16">History</th>
-            </tr>
-          </thead>
-          <tbody className="w-full">
-            {getAllVehicles &&
-              getAllVehicles.map((item, index) => {
-                return (
-                  <tr
-                    key={index}
-                    className="h-20 text-sm leading-none text-gray-800 bg-white hover:bg-gray-100 border-b border-t border-gray-100"
-                  >
-                    <td className="pl-4 md:pl-2 cursor-pointer">
-                      <div className="flex items-center">
-                        <div className="">
-                          <p className="font-medium">{index + 1}</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td className="pl-2 md:pl-12">
-                      <p className="text-sm font-medium leading-none text-gray-800">
-                        {item.number}
-                      </p>
-                    </td>
-                    <td className="pl-2 md:pl-12">
-                      <p className="font-medium">{item.model}</p>
-                    </td>
-                    <td className="pl-2 md:pl-12">
-                      <p className="font-medium">{item.color}</p>
-                    </td>
-                    <td className="pl-4 md:pl-20">
-                      <p className="font-medium">{item.category}</p>
-                    </td>
-                    <td className="pl-4 md:pl-20">
-                      <p className="font-medium">{item.chassisNumber}</p>
-                    </td>
-                    <td className="pl-4 md:pl-16">
-                      <History number={item.number} />
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
+      <div className="bg-[#14000b] min-h-screen w-full flex items-center justify-center mx-auto">
+        <div className="bg-[#30292c] shadow rounded-2xl w-full mx-4 lg:w-96 md:mx-10">
+          <div className="m-5 mb-2">
+            <div className="relative">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg
+                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+              </div>
+              <input
+                onChange={(e) => {
+                  setInputChassisNum(e.target.value);
+                }}
+                className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none"
+                placeholder="Enter vehicle chassis number..."
+              />
+            </div>
+          </div>
+          <div className="px-5 md:px-10 pb-10">
+            <div className="mt-5">
+              <div className="text-center mb-5 flex flex-row items-center justify-between">
+                <h2 className="mb-3 xl:mb-0 xl:mr-4 text-2xl text-white font-medium tracking-normal">
+                  {filterVehicleRecord && filterVehicleRecord.length > 0 ? (
+                    filterVehicleRecord[0]?.chassisNumber
+                  ) : (
+                    <>000</>
+                  )}
+                </h2>
+                <div className="text-sm bg-green-700 text-white px-5 lg:me-20 py-1 mb-4 sm:mb-0 font-normal rounded-full">
+                  Verified
+                </div>
+              </div>
+              <p className="text-start mt-2 text-xs sm:text-sm tracking-normal text-white leading-5">
+                {filterVehicleRecord && filterVehicleRecord.length > 0 ? (
+                  filterVehicleRecord[0]?.owner
+                ) : (
+                  <>0x00000....</>
+                )}
+              </p>
+            </div>
+            <div className="w-full py-3 md:py-5 flex flex-row items-start justify-center">
+              <div className="mr-2 md:mr-6 xl:mr-10">
+                <h2 className="text-white font-bold text-md md:text-xl leading-6 mb-2 text-center">
+                  {filterVehicleRecord && filterVehicleRecord.length > 0 ? (
+                    filterVehicleRecord[0]?.color
+                  ) : (
+                    <>.......</>
+                  )}
+                </h2>
+                <p className="text-white text-sm md:text-md leading-5">Color</p>
+              </div>
+              <div className="mr-2 md:mr-6 xl:mr-10">
+                <h2 className="text-white font-bold text-md md:text-xl leading-6 mb-2 text-center">
+                  {filterVehicleRecord && filterVehicleRecord.length > 0 ? (
+                    filterVehicleRecord[0]?.model
+                  ) : (
+                    <>0000</>
+                  )}
+                </h2>
+                <p className="text-white text-sm md:text-md leading-5">Model</p>
+              </div>
+              <div>
+                <h2 className="text-white font-bold text-md md:text-xl leading-6 mb-2 text-center">
+                  {filterVehicleRecord && filterVehicleRecord.length > 0 ? (
+                    filterVehicleRecord[0]?.number
+                  ) : (
+                    <>00000</>
+                  )}
+                </h2>
+                <p className="text-white text-sm md:text-md leading-5">
+                  Number
+                </p>
+              </div>
+            </div>
+            <div className="w-full flex-col justify-center flex">
+              {filterVehicleRecord && filterVehicleRecord.length > 0 ? (
+                <PublicHistory number={filterVehicleRecord[0]?.number} />
+              ) : (
+                <div className="relative bg-[#14000b] text-white rounded-lg shadow">
+                  <div className="p-3 md:p-5 space-y-4">No record found</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
