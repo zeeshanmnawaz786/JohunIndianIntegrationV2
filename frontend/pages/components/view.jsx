@@ -27,6 +27,7 @@ export default function View() {
               <th className="font-normal text-left pl-12">Color</th>
               <th className="font-normal text-left pl-20">Category</th>
               <th className="font-normal text-left pl-20">ChassisNumber</th>
+              <th className="font-normal text-left pl-20">Status</th>
               <th className="font-normal text-left pl-16">History</th>
             </tr>
           </thead>
@@ -62,6 +63,17 @@ export default function View() {
                     </td>
                     <td className="pl-20">
                       <p className="font-medium">{item.chassisNumber}</p>
+                    </td>
+                    <td className="pl-20">
+                      <p className="font-medium">
+                        {item.status === 0 ? (
+                          <p className="text-yellow-500">In Process</p>
+                        ) : item.status === 1 ? (
+                          <p className="text-green-500">Accept</p>
+                        ) : (
+                          <p className="text-red-500">Reject</p>
+                        )}
+                      </p>
                     </td>
                     <td className="pl-16">
                       <History number={item.number} />

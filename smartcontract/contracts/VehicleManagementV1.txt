@@ -5,9 +5,9 @@ import "hardhat/console.sol";
 
 contract VehicleManagement {
     address public owner;
-    uint256 public userCounter;
-    uint256 public vehicleCounter;
+    string[] public requestNumbers;
     string[] registerVehicleCounter;
+    uint256 public userCounter;
 
     enum RequestStatus {
         InProgress,
@@ -82,34 +82,101 @@ contract VehicleManagement {
             "Vehicle with this number is already registered"
         );
 
-        Vehicle memory newRequest = Vehicle({
+        VehicleRequest memory newRequest = VehicleRequest({
             number: _number,
             model: _model,
             color: _color,
             category: _category,
             chassisNumber: _chassisNumber,
-            owner: msg.sender,
+            requester: msg.sender,
             status: RequestStatus.InProgress
         });
-        vehicles[_number] = newRequest;
-        vehicleCounter = vehicleCounter + 1;
-        registerVehicleCounter.push(_number);
+        requestNumbers.push(_number);
+        vehicleRequests[_number] = newRequest;
     }
 
     function approveVehicleRegistration(
         string memory _number
     ) public onlyOwner {
-        Vehicle storage request = vehicles[_number];
+        VehicleRequest storage request = vehicleRequests[_number];
         require(
-            request.owner != address(0),
+            request.requester != address(0),
             "No pending request for this vehicle"
         );
+        uint256 indexToDelete;
+        for (uint256 i = 0; i < requestNumbers.length; i++) {
+            if (
+                keccak256(abi.encodePacked(requestNumbers[i])) ==
+                keccak256(abi.encodePacked(_number))
+            ) {
+                indexToDelete = i;
+                break;
+            }
+        }
+        if (indexToDelete < requestNumbers.length - 1) {
+            requestNumbers[indexToDelete] = requestNumbers[
+                requestNumbers.length - 1
+            ];
+        }
+        requestNumbers.pop();
 
-        vehicles[request.number].status = RequestStatus.Accepted;
+        Vehicle memory newVehicle = Vehicle({
+            model: request.model,
+            color: request.color,
+            number: request.number,
+            category: request.category,
+            chassisNumber: request.chassisNumber,
+            owner: request.requester,
+            status: RequestStatus.Accepted
+        });
+
+        vehicles[request.number] = newVehicle;
+        registerVehicleCounter.push(request.number);
+        delete vehicleRequests[request.number];
     }
 
     function rejectVehicleRegistration(string memory _number) public onlyOwner {
-        vehicles[_number].status = RequestStatus.Rejected;
+        VehicleRequest storage request = vehicleRequests[_number];
+        require(
+            request.requester != address(0),
+            "No pending request for this vehicle"
+        );
+        uint256 indexToDelete;
+        for (uint256 i = 0; i < requestNumbers.length; i++) {
+            if (
+                keccak256(abi.encodePacked(requestNumbers[i])) ==
+                keccak256(abi.encodePacked(_number))
+            ) {
+                indexToDelete = i;
+                break;
+            }
+        }
+
+        if (indexToDelete < requestNumbers.length - 1) {
+            requestNumbers[indexToDelete] = requestNumbers[
+                requestNumbers.length - 1
+            ];
+        }
+
+        vehicles[request.number].status = RequestStatus.Rejected;
+        requestNumbers.pop();
+        delete vehicleRequests[_number];
+    }
+
+    function getAllVehicleRequests()
+        public
+        view
+        returns (VehicleRequest[] memory)
+    {
+        VehicleRequest[] memory allRequests = new VehicleRequest[](
+            requestNumbers.length
+        );
+        for (uint256 i = 0; i < requestNumbers.length; i++) {
+            string memory requestNumber = requestNumbers[i];
+            VehicleRequest storage request = vehicleRequests[requestNumber];
+            allRequests[i] = request;
+        }
+        return allRequests;
     }
 
     function getAllVehicles() public view returns (Vehicle[] memory) {
