@@ -76,7 +76,11 @@ export default function View() {
                       </p>
                     </td>
                     <td className="pl-16">
-                      <History number={item.number} />
+                      {item.status === 1 ? (
+                        <History number={item.number} />
+                      ) : (
+                        <p>No history</p>
+                      )}
                     </td>
                   </tr>
                 );

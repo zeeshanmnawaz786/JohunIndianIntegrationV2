@@ -23,8 +23,12 @@ export default function Transfer() {
   );
 
   const filterVehicle = getAllVehicles?.filter((item) => {
-    return item.owner === address;
+    return item.owner === address && item.status === 1;
   });
+  console.log(
+    "🚀 ~ file: transfer.jsx:28 ~ filterVehicle ~ filterVehicle:",
+    filterVehicle
+  );
 
   const {
     mutateAsync: vehicleOwnershipTransfer,
