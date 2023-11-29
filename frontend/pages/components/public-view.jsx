@@ -4,7 +4,7 @@ import { useContract, useContractRead } from "@thirdweb-dev/react";
 import PublicHistory from "./publicHistoryRecord";
 
 export default function PublicView() {
-  const [inputChassisNum, setInputChassisNum] = useState();
+  const [inputVehicleNum, setInputVehicleNum] = useState();
   const { contract } = useContract(SMART_CONTRACT_ADDRESS);
   const { data: getAllVehicles } = useContractRead(
     contract,
@@ -13,7 +13,7 @@ export default function PublicView() {
   );
 
   const filterVehicleRecord = getAllVehicles?.filter((item) => {
-    return item.chassisNumber === inputChassisNum;
+    return item.number === inputVehicleNum;
   });
 
   return (
@@ -41,10 +41,10 @@ export default function PublicView() {
               </div>
               <input
                 onChange={(e) => {
-                  setInputChassisNum(e.target.value);
+                  setInputVehicleNum(e.target.value);
                 }}
                 className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none"
-                placeholder="Enter vehicle chassis number..."
+                placeholder="Enter vehicle number..."
               />
             </div>
           </div>
