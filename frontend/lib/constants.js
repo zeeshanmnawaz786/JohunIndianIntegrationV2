@@ -1,9 +1,5 @@
-// export const SMART_CONTRACT_ADDRESS =
-//   "0xC97bbDB3E243807C5068Da131f745d85A583fFAB";
-
-// client
 export const SMART_CONTRACT_ADDRESS =
-  "0xBAb05c19FfE51b187b9Be8019fd9F9c3f52558a3";
+  "0x2af4F3EDf7c5f688717562A9194109F19a6ceE8b";
 export const SMART_CONTRACT_ABI = [
   {
     type: "constructor",
@@ -34,6 +30,16 @@ export const SMART_CONTRACT_ABI = [
         type: "tuple[]",
         name: "",
         components: [
+          {
+            type: "string",
+            name: "ownerName",
+            internalType: "string",
+          },
+          {
+            type: "string",
+            name: "contact",
+            internalType: "string",
+          },
           {
             type: "string",
             name: "model",
@@ -87,9 +93,46 @@ export const SMART_CONTRACT_ABI = [
     ],
     outputs: [
       {
-        type: "address[]",
+        type: "tuple[]",
         name: "",
-        internalType: "address[]",
+        components: [
+          {
+            type: "string",
+            name: "number",
+            internalType: "string",
+          },
+          {
+            type: "address",
+            name: "newOwner",
+            internalType: "address",
+          },
+          {
+            type: "string",
+            name: "newOwnerName",
+            internalType: "string",
+          },
+          {
+            type: "string",
+            name: "newOwnerContact",
+            internalType: "string",
+          },
+          {
+            type: "string",
+            name: "previousOwnerName",
+            internalType: "string",
+          },
+          {
+            type: "string",
+            name: "previousOwnerContact",
+            internalType: "string",
+          },
+          {
+            type: "address",
+            name: "previousOwnerAddress",
+            internalType: "address",
+          },
+        ],
+        internalType: "struct VehicleManagement.OwnershipRequest[]",
       },
     ],
     stateMutability: "view",
@@ -124,8 +167,38 @@ export const SMART_CONTRACT_ABI = [
     ],
     outputs: [
       {
+        type: "string",
+        name: "number",
+        internalType: "string",
+      },
+      {
         type: "address",
-        name: "",
+        name: "newOwner",
+        internalType: "address",
+      },
+      {
+        type: "string",
+        name: "newOwnerName",
+        internalType: "string",
+      },
+      {
+        type: "string",
+        name: "newOwnerContact",
+        internalType: "string",
+      },
+      {
+        type: "string",
+        name: "previousOwnerName",
+        internalType: "string",
+      },
+      {
+        type: "string",
+        name: "previousOwnerContact",
+        internalType: "string",
+      },
+      {
+        type: "address",
+        name: "previousOwnerAddress",
         internalType: "address",
       },
     ],
@@ -155,6 +228,16 @@ export const SMART_CONTRACT_ABI = [
     type: "function",
     name: "requestVehicleRegistration",
     inputs: [
+      {
+        type: "string",
+        name: "_ownerName",
+        internalType: "string",
+      },
+      {
+        type: "string",
+        name: "_contact",
+        internalType: "string",
+      },
       {
         type: "string",
         name: "_number",
@@ -243,58 +326,19 @@ export const SMART_CONTRACT_ABI = [
         name: "_newOwner",
         internalType: "address",
       },
+      {
+        type: "string",
+        name: "_newOwnerName",
+        internalType: "string",
+      },
+      {
+        type: "string",
+        name: "_newOwnerContact",
+        internalType: "string",
+      },
     ],
     outputs: [],
     stateMutability: "nonpayable",
-  },
-  {
-    type: "function",
-    name: "vehicleRequests",
-    inputs: [
-      {
-        type: "string",
-        name: "",
-        internalType: "string",
-      },
-    ],
-    outputs: [
-      {
-        type: "string",
-        name: "number",
-        internalType: "string",
-      },
-      {
-        type: "string",
-        name: "model",
-        internalType: "string",
-      },
-      {
-        type: "string",
-        name: "color",
-        internalType: "string",
-      },
-      {
-        type: "string",
-        name: "category",
-        internalType: "string",
-      },
-      {
-        type: "string",
-        name: "chassisNumber",
-        internalType: "string",
-      },
-      {
-        type: "address",
-        name: "requester",
-        internalType: "address",
-      },
-      {
-        type: "uint8",
-        name: "status",
-        internalType: "enum VehicleManagement.RequestStatus",
-      },
-    ],
-    stateMutability: "view",
   },
   {
     type: "function",
@@ -307,6 +351,16 @@ export const SMART_CONTRACT_ABI = [
       },
     ],
     outputs: [
+      {
+        type: "string",
+        name: "ownerName",
+        internalType: "string",
+      },
+      {
+        type: "string",
+        name: "contact",
+        internalType: "string",
+      },
       {
         type: "string",
         name: "model",

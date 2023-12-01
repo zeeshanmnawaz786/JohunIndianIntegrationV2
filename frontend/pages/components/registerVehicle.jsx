@@ -1,15 +1,11 @@
-import {
-  ConnectWallet,
-  useAddress,
-  useContract,
-  useContractRead,
-  useContractWrite,
-} from "@thirdweb-dev/react";
+import { useContract, useContractWrite } from "@thirdweb-dev/react";
 import { SMART_CONTRACT_ADDRESS } from "../../lib/constants";
 import { useState } from "react";
 
 export default function RegisterVehicle() {
   const [vehicleData, setVehicleData] = useState({
+    ownerName: "",
+    contactNumber: "",
     number: "",
     model: "",
     color: "",
@@ -26,6 +22,8 @@ export default function RegisterVehicle() {
     try {
       const data = await requestVehicleRegistration({
         args: [
+          vehicleData.ownerName,
+          vehicleData.contactNumber,
           vehicleData.number,
           vehicleData.model,
           vehicleData.color,
@@ -61,6 +59,28 @@ export default function RegisterVehicle() {
               <div className="grid w-full grid-cols-1 lg:grid-cols-2 md:grid-cols-1 gap-7 mt-7 ">
                 <div>
                   <p className="text-base font-medium leading-none text-gray-800">
+                    Name
+                  </p>
+                  <input
+                    placeholder="xxxxxxxxxxxxxxxxxxxx"
+                    name="ownerName"
+                    onChange={handleInputChange}
+                    className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                  />
+                </div>
+                <div>
+                  <p className="text-base font-medium leading-none text-gray-800">
+                    Contact Number
+                  </p>
+                  <input
+                    placeholder="xxxxxxxxxxxxxxxxxxxx"
+                    name="contactNumber"
+                    onChange={handleInputChange}
+                    className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                  />
+                </div>
+                <div>
+                  <p className="text-base font-medium leading-none text-gray-800">
                     Vehicle Number
                   </p>
                   <input
@@ -69,9 +89,6 @@ export default function RegisterVehicle() {
                     onChange={handleInputChange}
                     className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
                   />
-                  <p className="mt-3 text-xs leading-3 text-gray-600">
-                    Set a simple and precise meta title
-                  </p>
                 </div>
                 <div>
                   <p className="text-base font-medium leading-none text-gray-800">
@@ -83,9 +100,6 @@ export default function RegisterVehicle() {
                     onChange={handleInputChange}
                     className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
                   />
-                  <p className="mt-3 text-xs leading-3 text-gray-600">
-                    Set a simple and precise meta title
-                  </p>
                 </div>
                 <div>
                   <p className="text-base font-medium leading-none text-gray-800">
@@ -97,9 +111,6 @@ export default function RegisterVehicle() {
                     onChange={handleInputChange}
                     className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
                   />
-                  <p className="mt-3 text-xs leading-3 text-gray-600">
-                    Set a simple and precise meta title
-                  </p>
                 </div>
                 <div>
                   <p className="text-base font-medium leading-none text-gray-800">
@@ -111,9 +122,6 @@ export default function RegisterVehicle() {
                     onChange={handleInputChange}
                     className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
                   />
-                  <p className="mt-3 text-xs leading-[15px] text-gray-600">
-                    Set words that are related to the product
-                  </p>
                 </div>
                 <div>
                   <p className="text-base font-medium leading-none text-gray-800">
@@ -125,9 +133,6 @@ export default function RegisterVehicle() {
                     onChange={handleInputChange}
                     className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
                   />
-                  <p className="mt-3 text-xs leading-[15px] text-gray-600">
-                    Set words that are related to the product
-                  </p>
                 </div>
                 <div>
                   {isLoadingRequestVehicleRegistration ? (

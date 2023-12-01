@@ -14,6 +14,8 @@ export default function Transfer() {
   const [transferOwnerShipData, setTransferOwnerShipData] = useState({
     number: "",
     newOwner: "",
+    newOwnerName: "",
+    newOwnerContactNumber: "",
   });
 
   const { data: getAllVehicles } = useContractRead(
@@ -25,10 +27,6 @@ export default function Transfer() {
   const filterVehicle = getAllVehicles?.filter((item) => {
     return item.owner === address && item.status === 1;
   });
-  console.log(
-    "🚀 ~ file: transfer.jsx:28 ~ filterVehicle ~ filterVehicle:",
-    filterVehicle
-  );
 
   const {
     mutateAsync: vehicleOwnershipTransfer,
@@ -38,16 +36,25 @@ export default function Transfer() {
   const callVehicleOwnershipTransfer = async () => {
     if (
       transferOwnerShipData.number === "" ||
-      transferOwnerShipData.newOwner === ""
+      transferOwnerShipData.newOwner === "" ||
+      transferOwnerShipData.newOwnerName === "" ||
+      transferOwnerShipData.newOwnerContactNumber === ""
     ) {
       return alert("field is empty");
     } else {
       try {
         const data = await vehicleOwnershipTransfer({
-          args: [transferOwnerShipData.number, transferOwnerShipData.newOwner],
+          args: [
+            transferOwnerShipData.number,
+            transferOwnerShipData.newOwner,
+            transferOwnerShipData.newOwnerName,
+            transferOwnerShipData.newOwnerContactNumber,
+          ],
         });
         transferOwnerShipData.number === "";
         transferOwnerShipData.newOwner === "";
+        transferOwnerShipData.newOwnerName === "";
+        transferOwnerShipData.newOwnerContactNumber === "";
         console.info("contract call successs", data);
       } catch (err) {
         console.error("contract call failure", err.reason);
@@ -103,9 +110,6 @@ export default function Transfer() {
                 );
               })}
           </select>
-          <p className="mt-3 text-xs leading-3 text-gray-600">
-            Set a simple and precise meta title
-          </p>
         </div>
 
         <div className="mt-4">
@@ -118,9 +122,28 @@ export default function Transfer() {
             name="newOwner"
             className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
           />
-          <p className="mt-3 text-xs leading-3 text-gray-600">
-            Set a simple and precise meta title
+        </div>
+        <div className="mt-4">
+          <p className="text-base font-medium leading-none text-gray-800">
+            New Owner Name
           </p>
+          <input
+            placeholder="0x00000000000000"
+            onChange={handleInputChange}
+            name="newOwnerName"
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+          />
+        </div>
+        <div className="mt-4">
+          <p className="text-base font-medium leading-none text-gray-800">
+            New Owner Contact
+          </p>
+          <input
+            placeholder="0x00000000000000"
+            onChange={handleInputChange}
+            name="newOwnerContactNumber"
+            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+          />
         </div>
         <div className="mt-8">
           {isLoadingVehicleOwnershipTransfer ? (

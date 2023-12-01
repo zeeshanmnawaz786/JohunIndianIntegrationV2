@@ -11,6 +11,15 @@ export default function History({ number }) {
     [number]
   );
 
+  const historyDetailFunc = (item) => {
+    return (
+      <>
+        <p>Owner Name : {item[2]}</p>
+        <p>Contact Number : {item[3]}</p>
+      </>
+    );
+  };
+
   return (
     <>
       <div className="flex items-center" onClick={() => setShowModal(true)}>
@@ -72,7 +81,13 @@ export default function History({ number }) {
                         getOwnershipHistory.map((item, index) => (
                           <div key={index} className="mb-2">
                             <span className="font-bold ">{index + 1}:</span>{" "}
-                            <span className="">{item}</span>{" "}
+                            <button className="group relative">
+                              <span className="">{item[6]}</span>
+                              <span className="hidden group-hover:inline-block z-10 absolute right-3 bg-black text-white p-2 rounded-md">
+                                <p>Owner Name : {item[2]}</p>
+                                <p>Contact Number : {item[3]}</p>
+                              </span>
+                            </button>
                           </div>
                         ))}
                       {getOwnershipHistory.length === 0 && (
