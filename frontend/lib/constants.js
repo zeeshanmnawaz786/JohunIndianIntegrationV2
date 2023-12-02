@@ -1,5 +1,5 @@
 export const SMART_CONTRACT_ADDRESS =
-  "0x2af4F3EDf7c5f688717562A9194109F19a6ceE8b";
+  "0xD4104122675F8633Fe962435e7b2a54c0423645d";
 export const SMART_CONTRACT_ABI = [
   {
     type: "constructor",
@@ -83,7 +83,7 @@ export const SMART_CONTRACT_ABI = [
   },
   {
     type: "function",
-    name: "getOwnershipHistory",
+    name: "getVehicleDetails",
     inputs: [
       {
         type: "string",
@@ -98,16 +98,6 @@ export const SMART_CONTRACT_ABI = [
         components: [
           {
             type: "string",
-            name: "number",
-            internalType: "string",
-          },
-          {
-            type: "address",
-            name: "newOwner",
-            internalType: "address",
-          },
-          {
-            type: "string",
             name: "newOwnerName",
             internalType: "string",
           },
@@ -117,22 +107,22 @@ export const SMART_CONTRACT_ABI = [
             internalType: "string",
           },
           {
-            type: "string",
-            name: "previousOwnerName",
-            internalType: "string",
-          },
-          {
-            type: "string",
-            name: "previousOwnerContact",
-            internalType: "string",
-          },
-          {
             type: "address",
-            name: "previousOwnerAddress",
+            name: "owner",
             internalType: "address",
           },
+          {
+            type: "uint256",
+            name: "registrationTime",
+            internalType: "uint256",
+          },
+          {
+            type: "uint256",
+            name: "ownershipEndTime",
+            internalType: "uint256",
+          },
         ],
-        internalType: "struct VehicleManagement.OwnershipRequest[]",
+        internalType: "struct VehicleManagement.Ownership[]",
       },
     ],
     stateMutability: "view",
@@ -145,60 +135,6 @@ export const SMART_CONTRACT_ABI = [
       {
         type: "address",
         name: "",
-        internalType: "address",
-      },
-    ],
-    stateMutability: "view",
-  },
-  {
-    type: "function",
-    name: "ownershipHistory",
-    inputs: [
-      {
-        type: "string",
-        name: "",
-        internalType: "string",
-      },
-      {
-        type: "uint256",
-        name: "",
-        internalType: "uint256",
-      },
-    ],
-    outputs: [
-      {
-        type: "string",
-        name: "number",
-        internalType: "string",
-      },
-      {
-        type: "address",
-        name: "newOwner",
-        internalType: "address",
-      },
-      {
-        type: "string",
-        name: "newOwnerName",
-        internalType: "string",
-      },
-      {
-        type: "string",
-        name: "newOwnerContact",
-        internalType: "string",
-      },
-      {
-        type: "string",
-        name: "previousOwnerName",
-        internalType: "string",
-      },
-      {
-        type: "string",
-        name: "previousOwnerContact",
-        internalType: "string",
-      },
-      {
-        type: "address",
-        name: "previousOwnerAddress",
         internalType: "address",
       },
     ],

@@ -23,20 +23,6 @@ contract VehicleManagement {
         bool registered;
     }
 
-    struct Ownership {
-        string newOwnerName;
-        string newOwnerContact;
-        address owner;
-        uint registrationTime;
-        uint ownershipEndTime;
-    }
-
-    struct VehicleRecord {
-        Ownership[] ownershipHistory;
-    }
-
-    mapping(string => VehicleRecord) vehiclesRecord;
-
     struct Vehicle {
         string ownerName;
         string contact;
@@ -61,6 +47,7 @@ contract VehicleManagement {
 
     mapping(address => User) public users;
     mapping(string => Vehicle) public vehicles;
+    mapping(string => OwnershipRequest[]) public ownershipHistory;
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Only the owner can perform this action");
@@ -118,16 +105,6 @@ contract VehicleManagement {
         );
 
         vehicles[request.number].status = RequestStatus.Accepted;
-
-        Ownership memory newOwnership = Ownership({
-            newOwnerName: request.ownerName,
-            newOwnerContact: request.contact,
-            owner: request.owner,
-            registrationTime: block.timestamp,
-            ownershipEndTime: 0
-        });
-
-        vehiclesRecord[_number].ownershipHistory.push(newOwnership);
     }
 
     function rejectVehicleRegistration(string memory _number) public onlyOwner {
@@ -149,6 +126,12 @@ contract VehicleManagement {
         return allVehicles;
     }
 
+    function getOwnershipHistory(
+        string memory _number
+    ) public view returns (OwnershipRequest[] memory) {
+        return ownershipHistory[_number];
+    }
+
     function vehicleOwnershipTransfer(
         string memory _number,
         address _newOwner,
@@ -161,30 +144,19 @@ contract VehicleManagement {
             "Only the current owner can transfer vehicle ownership"
         );
 
+        OwnershipRequest memory transferRequest = OwnershipRequest({
+            number: _number,
+            newOwner: _newOwner,
+            newOwnerName: _newOwnerName,
+            newOwnerContact: _newOwnerContact,
+            previousOwnerName: vehicle.ownerName,
+            previousOwnerContact: vehicle.contact,
+            previousOwnerAddress: vehicle.owner
+        });
+
+        ownershipHistory[_number].push(transferRequest);
         vehicles[_number].owner = _newOwner;
         vehicles[_number].ownerName = _newOwnerName;
         vehicles[_number].contact = _newOwnerContact;
-
-        vehiclesRecord[_number]
-            .ownershipHistory[
-                vehiclesRecord[_number].ownershipHistory.length - 1
-            ]
-            .ownershipEndTime = block.timestamp;
-
-        Ownership memory newOwnership = Ownership({
-            newOwnerName: _newOwnerName,
-            newOwnerContact: _newOwnerContact,
-            owner: _newOwner,
-            registrationTime: block.timestamp,
-            ownershipEndTime: 0
-        });
-
-        vehiclesRecord[_number].ownershipHistory.push(newOwnership);
-    }
-
-    function getVehicleDetails(
-        string memory _number
-    ) external view returns (Ownership[] memory) {
-        return vehiclesRecord[_number].ownershipHistory;
     }
 }

@@ -1,24 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { SMART_CONTRACT_ADDRESS } from "../../lib/constants";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
+import { convertTimestampToTime } from "../../lib/timestampToTime";
 
 export default function History({ number }) {
   const [showModal, setShowModal] = useState(false);
   const { contract } = useContract(SMART_CONTRACT_ADDRESS);
-  const { data: getOwnershipHistory } = useContractRead(
+  const { data: getVehicleDetails } = useContractRead(
     contract,
-    "getOwnershipHistory",
+    "getVehicleDetails",
     [number]
   );
-
-  const historyDetailFunc = (item) => {
-    return (
-      <>
-        <p>Owner Name : {item[2]}</p>
-        <p>Contact Number : {item[3]}</p>
-      </>
-    );
-  };
 
   return (
     <>
@@ -77,20 +69,28 @@ export default function History({ number }) {
                     </div>
 
                     <div className="p-4 w-full md:p-5 space-y-4">
-                      {getOwnershipHistory &&
-                        getOwnershipHistory.map((item, index) => (
+                      {getVehicleDetails &&
+                        getVehicleDetails.map((item, index) => (
                           <div key={index} className="mb-2">
                             <span className="font-bold ">{index + 1}:</span>{" "}
                             <button className="group relative">
-                              <span className="">{item[6]}</span>
+                              <span className="">{item[2]}</span>
                               <span className="hidden group-hover:inline-block z-10 absolute right-3 bg-black text-white p-2 rounded-md">
-                                <p>Owner Name : {item[2]}</p>
-                                <p>Contact Number : {item[3]}</p>
+                                <p>Owner Name : {item[0]}</p>
+                                <p>Contact Number : {item[1]}</p>
+                                <p>
+                                  Start Date :{" "}
+                                  {convertTimestampToTime(String(item[3]))}
+                                </p>
+                                <p>
+                                  End Date :{" "}
+                                  {convertTimestampToTime(String(item[4]))}
+                                </p>
                               </span>
                             </button>
                           </div>
                         ))}
-                      {getOwnershipHistory.length === 0 && (
+                      {getVehicleDetails.length === 0 && (
                         <p className="italic">No history found</p>
                       )}
                     </div>

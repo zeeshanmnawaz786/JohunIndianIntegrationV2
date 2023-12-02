@@ -79,7 +79,7 @@ describe("VehicleManagement Smart Contract", function () {
       .connect(a3)
       .vehicleOwnershipTransfer("8030", a4.getAddress(), "Sohail", "9113");
   });
-  it("getOwnershipHistory", async function () {
+  it("getVehicleDetails", async function () {
     console.log(
       "a1",
       a1.getAddress(),
@@ -90,8 +90,6 @@ describe("VehicleManagement Smart Contract", function () {
       "a4",
       a4.getAddress()
     );
-    console.log(
-      await vehicleManagement.connect(a1).getOwnershipHistory("8030")
-    );
+    console.log(await vehicleManagement.connect(a1).getVehicleDetails("8030"));
   });
 });
