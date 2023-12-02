@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { SMART_CONTRACT_ADDRESS } from "../../lib/constants";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
 import { convertTimestampToTime } from "../../lib/timestampToTime";
@@ -10,6 +10,10 @@ export default function History({ number }) {
     contract,
     "getVehicleDetails",
     [number]
+  );
+  console.log(
+    "🚀 ~ file: history.jsx:10 ~ History ~ getVehicleDetails:",
+    getVehicleDetails
   );
 
   return (
@@ -34,7 +38,7 @@ export default function History({ number }) {
       </div>
       {showModal ? (
         <>
-          <div className="fixed inset-0 z-50 overflow-x-hidden overflow-y-auto flex justify-center items-center outline-none focus:outline-none">
+          <div className="fixed inset-0 z-50 text-black overflow-x-hidden overflow-y-auto flex justify-center items-center outline-none focus:outline-none">
             <div className="relative mx-auto my-6 w-full max-w-md sm:max-w-lg md:max-w-2xl">
               <div className="flex-auto w-full">
                 <div className="relative p-4 w-full max-w-2xl max-h-full">
