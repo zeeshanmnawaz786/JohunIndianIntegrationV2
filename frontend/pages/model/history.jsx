@@ -79,7 +79,7 @@ export default function History({ number }) {
                             <span className="font-bold ">{index + 1}:</span>{" "}
                             <button className="group relative">
                               <span className="">{item[2]}</span>
-                              <span className="hidden group-hover:inline-block z-10 absolute right-3 bg-black text-white p-2 rounded-md">
+                              <span className="hidden group-hover:inline-block z-10 absolute right-3 bottom-3 bg-black text-white p-2 rounded-md">
                                 <p>Owner Name : {item[0]}</p>
                                 <p>Contact Number : {item[1]}</p>
                                 <p>
