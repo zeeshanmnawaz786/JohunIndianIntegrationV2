@@ -7,13 +7,8 @@ import { SMART_CONTRACT_ADDRESS } from "../../lib/constants";
 
 export default function Owner() {
   const { contract } = useContract(SMART_CONTRACT_ADDRESS);
-  // const { data: getAllVehicleRequests } = useContractRead(
-  //   contract,
-  //   "getAllVehicleRequests",
-  //   []
-  // );
 
-  const { data: getAllVehicles, isLoading } = useContractRead(
+  const { data: getAllVehicles } = useContractRead(
     contract,
     "getAllVehicles",
     []

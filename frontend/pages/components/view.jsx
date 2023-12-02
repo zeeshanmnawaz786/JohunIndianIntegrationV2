@@ -5,7 +5,7 @@ import History from "../model/history";
 export default function View() {
   const address = useAddress();
   const { contract } = useContract(SMART_CONTRACT_ADDRESS);
-  const { data: getAllVehicles, isLoading } = useContractRead(
+  const { data: getAllVehicles } = useContractRead(
     contract,
     "getAllVehicles",
     []

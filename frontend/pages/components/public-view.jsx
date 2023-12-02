@@ -13,7 +13,7 @@ export default function PublicView() {
   );
 
   const filterVehicleRecord = getAllVehicles?.filter((item) => {
-    return item.number === inputVehicleNum;
+    return item.number === inputVehicleNum && item.status === 1;
   });
 
   return (
