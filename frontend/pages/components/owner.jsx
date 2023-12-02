@@ -48,7 +48,7 @@ export default function Owner() {
   };
   return (
     <>
-      <div className="bg-gradient-to-br from-[#14000b] to-[#1f1b1d] min-h-screen py-10">
+      <div className="bg-gradient-to-br from-[#14000b] to-[#1f1b1d] min-h-screen py-10 px-10">
         <div className=" shadow px-4 lg:mt-0 md:mt-10 mt-20 sm:mt-0 md:px-10 lg:pt-0 md:pt-0 pb-5 overflow-x-auto">
           <table className="w-full whitespace-nowrap">
             <thead>
