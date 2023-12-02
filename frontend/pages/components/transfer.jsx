@@ -6,6 +6,7 @@ import {
 } from "@thirdweb-dev/react";
 import { SMART_CONTRACT_ADDRESS } from "../../lib/constants";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Transfer() {
   const { contract } = useContract(SMART_CONTRACT_ADDRESS);
@@ -71,117 +72,133 @@ export default function Transfer() {
     }));
   };
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="bg-white  rounded lg:w-1/3  md:w-1/2 w-full p-10 mt-5">
-        <p className="text-2xl font-extrabold leading-6 text-gray-800">
-          Transfer Vehicle Ownership
-        </p>
-        <p className="text-sm mt-4 font-medium leading-none text-gray-500">
-          Transfer your ownership to a new owner
-        </p>
-        <div className="w-full flex items-center justify-between py-5">
-          <hr className="w-full bg-gray-400" />
+    <div className="bg-gradient-to-br from-[#14000b] to-[#1f1b1d] min-h-screen py-10">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-wrap items-center ">
+          <div className="w-full lg:w-1/2">
+            <div className="mt-10 px-6 w-full">
+              <p className="text-2xl font-extrabold leading-6 text-white">
+                Transfer Vehicle Ownership
+              </p>
+              <p className="text-sm mt-4 font-medium leading-none text-white">
+                Transfer your ownership to a new owner
+              </p>
+              <div className="w-full flex items-center justify-between py-2">
+                <hr className="w-full bg-gray-400" />
+              </div>
 
-          <hr className="w-full bg-gray-400" />
-        </div>
-        <div className="mt-4">
-          <label
-            htmlFor="vehicleNumber"
-            className="text-base font-medium leading-none text-gray-800"
-          >
-            Vehicle Number
-          </label>
-          <select
-            id="vehicleNumber"
-            onChange={handleInputChange}
-            name="number"
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-          >
-            <option value="" selected disabled>
-              Select a vehicle number
-            </option>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+                <div className="mt-2">
+                  <label
+                    htmlFor="vehicleNumber"
+                    className="text-base font-medium leading-none text-white"
+                  >
+                    Vehicle Number
+                  </label>
+                  <select
+                    id="vehicleNumber"
+                    onChange={handleInputChange}
+                    name="number"
+                    className="w-full p-3 mt-2 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                  >
+                    <option value="" selected disabled>
+                      Select a vehicle number
+                    </option>
 
-            {filterVehicle &&
-              filterVehicle.map((item, index) => {
-                return (
-                  <option key={index} value={item.number}>
-                    {item.number}
-                  </option>
-                );
-              })}
-          </select>
-        </div>
+                    {filterVehicle &&
+                      filterVehicle.map((item, index) => {
+                        return (
+                          <option key={index} value={item.number}>
+                            {item.number}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </div>
 
-        <div className="mt-4">
-          <p className="text-base font-medium leading-none text-gray-800">
-            New Owner Address
-          </p>
-          <input
-            placeholder="0x00000000000000"
-            onChange={handleInputChange}
-            name="newOwner"
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-          />
-        </div>
-        <div className="mt-4">
-          <p className="text-base font-medium leading-none text-gray-800">
-            New Owner Name
-          </p>
-          <input
-            placeholder="0x00000000000000"
-            onChange={handleInputChange}
-            name="newOwnerName"
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-          />
-        </div>
-        <div className="mt-4">
-          <p className="text-base font-medium leading-none text-gray-800">
-            New Owner Contact
-          </p>
-          <input
-            placeholder="0x00000000000000"
-            onChange={handleInputChange}
-            name="newOwnerContactNumber"
-            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
-          />
-        </div>
-        <div className="mt-8">
-          {isLoadingVehicleOwnershipTransfer ? (
-            <button
-              type="button"
-              className="inline-flex items-center justify-center bg-indigo-700 whitespace-nowrap rounded hover:bg-indigo-600 transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white  w-full "
-              disabled=""
-            >
-              <svg
-                className="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-              Loading...
-            </button>
-          ) : (
-            <button
-              onClick={callVehicleOwnershipTransfer}
-              className="focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full"
-            >
-              Transfer
-            </button>
-          )}
+                <div className="mt-2">
+                  <p className="text-base font-medium leading-none text-white">
+                    New Owner Address
+                  </p>
+                  <input
+                    placeholder="Enter transfer address"
+                    onChange={handleInputChange}
+                    name="newOwner"
+                    className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                  />
+                </div>
+                <div className="mt-2">
+                  <p className="text-base font-medium leading-none text-white">
+                    New Owner Name
+                  </p>
+                  <input
+                    placeholder="Enter transfer owner name"
+                    onChange={handleInputChange}
+                    name="newOwnerName"
+                    className="w-full p-3 mt-2 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                  />
+                </div>
+                <div className="mt-2">
+                  <p className="text-base font-medium leading-none text-white">
+                    New Owner Contact
+                  </p>
+                  <input
+                    placeholder="Enter transsfer owner contact"
+                    onChange={handleInputChange}
+                    name="newOwnerContactNumber"
+                    className="w-full p-3 mt-2 border border-gray-300 rounded outline-none focus:bg-gray-50"
+                  />
+                </div>
+                <div className="mt-2">
+                  {isLoadingVehicleOwnershipTransfer ? (
+                    <button
+                      type="button"
+                      className="inline-flex items-center justify-center bg-indigo-700 whitespace-nowrap rounded hover:bg-indigo-600 transform duration-300 ease-in-out text-sm font-medium px-6 py-4 text-white  w-full "
+                      disabled=""
+                    >
+                      <svg
+                        className="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Loading...
+                    </button>
+                  ) : (
+                    <button
+                      onClick={callVehicleOwnershipTransfer}
+                      className=" text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full"
+                    >
+                      Transfer
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="w-full lg:w-1/2 mb-8 lg:mb-0 hidden lg:flex">
+            <Image
+              src="/images/transfer.png"
+              alt="Side Image"
+              width={1000}
+              height={60000}
+              className="object-cover w-full h-full rounded-lg"
+            />
+          </div>
         </div>
       </div>
     </div>
